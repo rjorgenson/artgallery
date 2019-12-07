@@ -1,7 +1,7 @@
 const convert = require('imagemagick').convert;
 
 /**
- * Wrap Imagemagick's convert function in a Promise so it can be used with async/await.
+ * Wraps Imagemagick's convert function in a Promise so it can be used with async/await.
  */
 function conv(args) {
     return new Promise((resolve, reject) => {

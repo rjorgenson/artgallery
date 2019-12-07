@@ -1,24 +1,24 @@
 const path = require('path');
-const wallpaper = require('./wallpaper');
+const wallpaper = require('./src/wallpaper');
 
 async function generateWallpapers() {
-    const inputDir = path.join('/home/cotp/Art');
-    const outputDir = path.join('/home/cotp/Pictures/Art');
+    const inputImageDir = path.join('/home/cotp/Art');
+    const wallpaperOutputDir = path.join('/home/cotp/Pictures/Art');
 
-    const sizes = [
-        { width: 2650, height: 1440 },
+    const wallpaperSizes = [
+        { width: 1920, height: 1080 },
     ];
 
     const wallpapers = [
         {
-            inputImage: path.join(inputDir, 'rembrandt-self-portrait-1659/original/Rembrandt_self_portrait.jpg'),
+            artImage: path.join(inputImageDir, 'rembrandt-self-portrait-1659/original/Rembrandt_self_portrait.jpg'),
             title: 'Self-portrait',
             artist: 'Rembrandt',
             date: '1659',
             medium: 'Oil on canvas',
         },
         {
-            inputImage: path.join(inputDir, 'amaldus-nielsen-aften-ved-frederiksstad-1909/original/Amaldus_Nielsen-Aften_ved_Frederiksstad.jpg'),
+            artImage: path.join(inputImageDir, 'amaldus-nielsen-aften-ved-frederiksstad-1909/original/Amaldus_Nielsen-Aften_ved_Frederiksstad.jpg'),
             title: 'Aften ved Frederiksstad',
             artist: 'Amaldus Nielsen',
             date: '1909',
@@ -27,9 +27,9 @@ async function generateWallpapers() {
     ];
 
     for (const wp of wallpapers) {
-        for (const size of sizes) {
-            const outputImage = path.join(outputDir, `${wp.title}-${wp.artist}-${wp.date}-${size.width}x${size.height}.jpg`);
-            await wallpaper({...wp, ...size, outputImage}).catch(e => console.error(e));
+        for (const size of wallpaperSizes) {
+            const wallpaperFile = path.join(wallpaperOutputDir, `${wp.title}-${wp.artist}-${wp.date}-${size.width}x${size.height}.jpg`);
+            await wallpaper.create({...wp, ...size, wallpaperFile}).catch(e => console.error(e));
         }
     }
 }
