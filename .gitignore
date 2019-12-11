@@ -1,2 +1,6 @@
-.idea/
+/.idea/
 node_modules/
+/config/local.yaml
+/database/*.json
+/database/*.db
+/database/*.db-journal

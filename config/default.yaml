@@ -1,0 +1,4 @@
+artDirectory: './images/Art'
+wallpaperDirectory: './images/Wallpaper'
+catalogDirectory: 'catalogs'
+databaseFile: 'database/artgallery.db'

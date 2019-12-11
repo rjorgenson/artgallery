@@ -4,12 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "updateDatabase": "node scripts/updateDatabase.js",
+    "downloadImages": "node scripts/downloadImages.js",
+    "createWallpapers": "node ./scripts/createWallpapers.js",
+    "test": "jest"
   },
   "author": "Eric Turner <erturne@gmail.com> (https://github.com/erturne/)",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.0",
+    "config": "^3.2.4",
+    "csv-parser": "^2.3.2",
+    "iconv-lite": "^0.5.0",
     "imagemagick": "^0.1.3",
-    "lodash": "^4.17.15"
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15",
+    "sqlite3": "^4.1.1",
+    "uuid": "^3.3.3",
+    "yargs": "^15.0.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }

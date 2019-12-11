@@ -1,0 +1,2 @@
+The [Web Gallery of Art](https://www.wga.hu) contains over 48,000 reproductions of European fine art and architecture,
+and provides a [delimited text version of its catalog](https://www.wga.hu/database/download/data_txt.zip) for download.
