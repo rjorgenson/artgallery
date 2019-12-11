@@ -5,14 +5,10 @@ const path = require('path');
 const convert = require('./imagemagick/convert');
 const db = require('./db');
 
-async function create(max=100) {
+async function create(max = 100) {
     const artDirectory = config.get('artDirectory');
     const wallpaperDirectory = config.get('wallpaperDirectory');
-
-    // TODO: Add sizes to config
-    const wallpaperSizes = [
-        { width: 1920, height: 1080 },
-    ];
+    const wallpaperSizes = config.get('wallpaperSizes');
 
     const records = await getRecords(max);
 
@@ -23,10 +19,16 @@ async function create(max=100) {
             artist: record.artist,
             date: record.date,
             technique: record.technique,
+            location: record.location,
         };
         for (const size of wallpaperSizes) {
             const wallpaperFile = path.join(wallpaperDirectory, `${size.width}x${size.height}-${record.file_name}`);
-            await createWallpaper({...wp, ...size, wallpaperFile, textPosition: 'southeast', textOffset: 35}).catch(e => console.error(e));
+            await createWallpaper({
+                ...wp, ...size,
+                wallpaperFile,
+                textPosition: 'southeast',
+                textOffset: 50,
+            }).catch(e => console.error(e));
         }
     }
 }
@@ -41,32 +43,36 @@ async function create(max=100) {
  * @param artImage
  * @param backgroundColor
  * @param fontColor
- * @param font
+ * @param fontOutlineColor
+ * @param fontFamily
  * @param textPosition
  * @param textOffset
  * @param pointSize
  * @param title
  * @param artist
  * @param date
+ * @param location
  * @param technique
  * @returns {Promise<void>}
  */
 async function createWallpaper({
-                             width = 2650,
-                             height = 1440,
-                             wallpaperFile = 'wallpaper.jpg',
-                             artImage,
-                             backgroundColor = 'black',
-                             fontColor = 'white',
-                             font = 'Ubuntu',
-                             textPosition = 'northeast',
-                             textOffset = 25,
-                             pointSize = 28,
-                             title = 'Unknown title',
-                             artist = 'Unknown artist',
-                             date = 'Unknown date',
-                             technique = 'Unknown technique',
-                         } = {}) {
+                                   width = 2650,
+                                   height = 1440,
+                                   wallpaperFile = 'wallpaper.jpg',
+                                   artImage,
+                                   backgroundColor = 'black',
+                                   fontColor = 'white',
+                                   fontOutlineColor = 'black',
+                                   fontFamily = 'Ubuntu',
+                                   textPosition = 'northeast',
+                                   textOffset = 25,
+                                   pointSize = 28,
+                                   title = 'Unknown title',
+                                   artist = 'Unknown artist',
+                                   date = 'Unknown date',
+                                   location = 'Unknown location',
+                                   technique = 'Unknown technique',
+                               } = {}) {
     if (_isEmpty(artImage)) {
         throw "Input image must be provided";
     }
@@ -76,7 +82,8 @@ async function createWallpaper({
     try {
         await createWallpaperCanvas(wallpaperFile, width, height, backgroundColor);
         await addImageToWallpaperCanvas(wallpaperFile, artImage);
-        await addTextToWallpaperCanvas(wallpaperFile, textPosition, fontColor, font, pointSize, textOffset, [title, artist, date, technique]);
+        const linesOfText = [title, artist, date, location, technique];
+        await addTextToWallpaperCanvas(wallpaperFile, textPosition, fontColor, fontOutlineColor, fontFamily, pointSize, textOffset, linesOfText);
     } catch (e) {
         console.error(e)
     }
@@ -113,19 +120,21 @@ async function addImageToWallpaperCanvas(wallpaperFile, artImage) {
  * @param wallpaperFile - The file to add the text to.
  * @param position - northwest, southwest, northeast, or southeast.
  * @param fontColor - Font color (e.g. black, #000, etc)
- * @param font - The font family (e.g. Ubuntu)
+ * @param fontOutlineColor - Font outline color (e.g. black, #000, etc)
+ * @param fontFamily - The font family (e.g. Ubuntu)
  * @param pointSize - The size of the text in points.
  * @param offsetPx - Number of pixels from the edges to offset the text.
  * @param lines - List of lines of text.
  */
-async function addTextToWallpaperCanvas(wallpaperFile, position, fontColor, font, pointSize, offsetPx, lines = []) {
+async function addTextToWallpaperCanvas(wallpaperFile, position, fontColor, fontOutlineColor, fontFamily, pointSize, offsetPx, lines = []) {
     const text = lines.join('\n');
     await convert([
         wallpaperFile,
         '-gravity',
         position,
         '-fill', fontColor,
-        '-font', font,
+        '-stroke', fontOutlineColor,
+        '-font', fontFamily,
         '-pointsize', pointSize,
         '-annotate', `+${offsetPx}+${offsetPx}`,
         text,
@@ -171,8 +180,7 @@ async function getImageDimensions(image) {
  * Get records of art from the database to generate wallpapers for. Prefer the most recently-modified database records
  * so that we tend to generate wallpaper for recently-downloaded images.
  *
- * @param max
- * @returns {Promise<unknown>}
+ * @param max The maximum number of records to get.
  */
 async function getRecords(max) {
     const database = await db.get();

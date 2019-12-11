@@ -19,13 +19,13 @@ npm install
 
 There are a few things you can do with Art Gallery:
 
-* Update the database of records from the catalogs
-* Download images of art for each record in the catalogs
-* Create wallpaper/backgrounds from the art images
+* Update the database of records from the online catalogs (e.g. Web Gallery of Art)
+* Download images of art for each record in the database
+* Create wallpaper/backgrounds from the images of art you downloaded
 
 ### Update the Database
 
-This reads data from the catalogs (in `./catalogs`) and creates or updates records in the database for them.
+This reads data from the catalogs (in `catalogs`) and creates or updates records in the database for them.
 
 ```
 npm run updateDatabase
@@ -63,6 +63,4 @@ file within each source's subdirectory.
 
 ## Future Work
 
-Need to set the dimensions of the wallpapers in configuration (currently it's hard-coded in `src/wallpapers.js`).
-
-I am considering creating a web application that allows people to browse, search, comment, etc.
+I am considering creating a web application that allows people to browse, search, comment, generate their own wallpapers, etc.

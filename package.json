@@ -1,7 +1,7 @@
 {
   "name": "artgallery",
   "version": "1.0.0",
-  "description": "",
+  "description": "A node.js application that downloads art images from online catalogs and supports creation of wallpaper/background images",
   "main": "index.js",
   "scripts": {
     "updateDatabase": "node scripts/updateDatabase.js",
@@ -9,7 +9,7 @@
     "createWallpapers": "node ./scripts/createWallpapers.js",
     "test": "jest"
   },
-  "author": "Eric Turner <erturne@gmail.com> (https://github.com/erturne/)",
+  "author": "Eric Turner <codeoftheprogrammer@gmail.com> (https://github.com/CodeOfTheProgrammer/)",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",

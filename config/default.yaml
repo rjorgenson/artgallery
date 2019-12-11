@@ -1,4 +1,7 @@
 artDirectory: './images/Art'
 wallpaperDirectory: './images/Wallpaper'
+wallpaperSizes:
+  - width: 1920
+    height: 1080
 catalogDirectory: 'catalogs'
 databaseFile: 'database/artgallery.db'
