@@ -4,3 +4,5 @@ node_modules/
 /database/*.json
 /database/*.db
 /database/*.db-journal
+/images/Art/*
+/images/Wallpapers/*
