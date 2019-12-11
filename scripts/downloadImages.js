@@ -13,7 +13,7 @@ async function downloadImages() {
     } else if (argv.delayMs > 0) {
         await images.download(100, argv.delayMs);
     } else {
-        await images.downloadImages();
+        await images.download();
     }
 }
 

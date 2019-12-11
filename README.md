@@ -3,6 +3,7 @@
 ## Prerequisites
 
 * Node 12.x or higher
+* Imagemagick
 * Sqlite3
 
 ## Installation
