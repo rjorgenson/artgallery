@@ -26,7 +26,7 @@ async function create(max=100) {
         };
         for (const size of wallpaperSizes) {
             const wallpaperFile = path.join(wallpaperDirectory, `${size.width}x${size.height}-${record.file_name}`);
-            await createWallpaper({...wp, ...size, wallpaperFile}).catch(e => console.error(e));
+            await createWallpaper({...wp, ...size, wallpaperFile, textPosition: 'southeast', textOffset: 35}).catch(e => console.error(e));
         }
     }
 }
