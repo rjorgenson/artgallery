@@ -33,6 +33,12 @@ async function download(max = 100, delayMs = 7500) {
     }
 }
 
+/**
+ * Gets a random set database records that don't have a file_name, indicating that the art image has not been downloaded.
+ *
+ * @param max
+ * @returns {Promise<unknown>}
+ */
 async function getRecordsMissingImages(max) {
     const database = await db.get();
     return new Promise((resolve, reject) => {
@@ -47,6 +53,12 @@ async function getRecordsMissingImages(max) {
     })
 }
 
+/**
+ * Downloads an image for a record.
+ *
+ * @param record
+ * @returns {Promise<unknown>}
+ */
 async function downloadImage(record) {
     const {url} = record;
     const fileName = createFileName(record);
@@ -67,6 +79,13 @@ async function downloadImage(record) {
     });
 }
 
+/**
+ * Updates the database record with the name of the image file that was downloaded for that piece of art.
+ *
+ * @param fileName
+ * @param record
+ * @returns {Promise<unknown>}
+ */
 async function saveFileName(fileName, record) {
     const database = await db.get();
     return new Promise((resolve, reject) => {
@@ -82,6 +101,12 @@ async function saveFileName(fileName, record) {
     });
 }
 
+/**
+ * Pauses execution.
+ *
+ * @param ms
+ * @returns {Promise<unknown>}
+ */
 function pause(ms = 1000) {
     return new Promise((resolve, reject) => {
         try {
@@ -92,6 +117,13 @@ function pause(ms = 1000) {
     });
 }
 
+/**
+ * Creates a file name for an image of a piece of art. The name consists of the database record id number, title, artist,
+ * and catalog.
+ *
+ * @param record
+ * @returns {string}
+ */
 function createFileName(record) {
     const {art_id, title, artist, catalog} = record;
     return `${art_id}-${_snakeCase(title)}-${_snakeCase(artist)}-${_snakeCase(catalog)}.jpg`;
