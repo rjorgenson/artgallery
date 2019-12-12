@@ -5,4 +5,4 @@ node_modules/
 /database/*.db
 /database/*.db-journal
 /images/Art/*
-/images/Wallpapers/*
+/images/Wallpaper/*
