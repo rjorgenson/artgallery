@@ -12,7 +12,7 @@
   "author": "Eric Turner <codeoftheprogrammer@gmail.com> (https://github.com/CodeOfTheProgrammer/)",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "config": "^3.2.4",
     "csv-parser": "^2.3.2",
     "iconv-lite": "^0.5.0",
